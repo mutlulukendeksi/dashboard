@@ -87,7 +87,7 @@ const DashboardLayout = (props: Props) => {
 
                     <Menu.Label>Danger zone</Menu.Label>
                     <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
-                    <Menu.Item onClick={() => signOut({ callbackUrl: '/auth/login' })} color="red" icon={<IconLogout size={14} />}>Sign Out</Menu.Item>
+                    <Menu.Item onClick={() => signOut()} color="red" icon={<IconLogout size={14} />}>Sign Out</Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
               </Container>

@@ -24,7 +24,7 @@ const login = (props: Props) => {
       <Center style={{ width: '100vw', height: '100vh' }}>
         <Container w="400px" h="500px" style={{ backgroundColor: 'white' }}>
           <Center style={{ width: '100%', height: '100%' }}>
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <form onSubmit={form.onSubmit((values) => signIn('credentials', { ...values, callbackUrl: '/'}))}>
               <h1>Mutluluk Endeksi</h1>
               <TextInput
                 w="350px"

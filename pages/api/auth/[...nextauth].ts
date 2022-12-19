@@ -1,4 +1,5 @@
 import NextAuth from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 //import Auth0Provider from "next-auth/providers/auth0"
 import FacebookProvider from "next-auth/providers/facebook"
@@ -9,8 +10,10 @@ import TwitterProvider from "next-auth/providers/twitter"
 import AppleProvider from "next-auth/providers/apple"
 import prisma from '../../../lib/prisma'
 import { NextApiHandler } from "next"
+import bcrypt from "bcryptjs";
+import { NextApiRequest, NextApiResponse } from 'next'
 
-const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
+const authHandler: NextApiHandler = (req: NextApiRequest, res: NextApiResponse): Promise<void> => NextAuth(req, res, options);
 export default authHandler;
 
 // For more information on each option (and a full list of options) go to
@@ -22,6 +25,30 @@ const options = {
     //   server: process.env.NEXT_EMAIL_SERVER,
     //   from: process.env.NEXT_EMAIL_FROM,
     // }),
+    // ! Burası çalışmıyor kontrol etmemiz gerekiyor.
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      authorize: async (credentials) => {
+        const user = await prisma.user.findFirst({
+          where: {
+            email: credentials?.email
+          }
+        })        
+
+        if (bcrypt.compareSync(credentials?.password as string, user?.password as string)) {
+          return {
+            id: user?.id,
+            email: user?.email,
+          }
+        } else {
+          return null
+        }
+      },
+    }),
     AppleProvider({
       clientId: process.env.NEXT_APPLE_ID,
       clientSecret: process.env.NEXT_APPLE_SECRET,
@@ -100,8 +127,8 @@ const options = {
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
-    // signOut: '/auth/signout', // Displays form with sign out button
+    signIn: '/auth/login',  // Displays signin buttons
+    signOut: '/auth/login', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
     // newUser: null // If set, new users will be directed here on first sign in
