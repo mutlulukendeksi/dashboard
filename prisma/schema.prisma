@@ -52,6 +52,8 @@ model User {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   accounts      Account[]
   sessions      Session[]
+  emotions      Emotion[]
+  devices       Device[]
 
   @@map(name: "users")
 }
@@ -63,4 +65,29 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+model Device {
+  id         Int      @id @default(autoincrement())
+  userId     Int      @map("user_id")
+  deviceId   String
+  latitude   String
+  longtitude String
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @updatedAt @map(name: "updated_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "devices")
+}
+
+model Emotion {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  name        String?
+  description String?
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "emotions")
 }

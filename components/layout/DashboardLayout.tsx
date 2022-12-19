@@ -47,8 +47,9 @@ const DashboardLayout = (props: Props) => {
         asideOffsetBreakpoint="sm"
         navbar={
           <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-            <NavLink label="Dashboard" icon={<IconHome2 size={16} stroke={1.5} />} />
-            <NavLink label="User List" icon={<IconHome2 size={16} stroke={1.5} />} />
+            <NavLink component="a" href="/" label="Dashboard" icon={<IconHome2 size={16} stroke={1.5} />} />
+            <NavLink component="a" href="/user" label="User List" icon={<IconHome2 size={16} stroke={1.5} />} />
+            <NavLink component="a" href="/device" label="Device List" icon={<IconHome2 size={16} stroke={1.5} />} />
           </Navbar>
         }
         header={
@@ -72,21 +73,9 @@ const DashboardLayout = (props: Props) => {
                   </Menu.Target>
 
                   <Menu.Dropdown>
-                    <Menu.Label>Application</Menu.Label>
                     <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-                    <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
-                    <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
-                    <Menu.Item
-                      icon={<IconSearch size={14} />}
-                      rightSection={<Text size="xs" color="dimmed">⌘K</Text>}
-                    >
-                      Search
-                    </Menu.Item>
 
                     <Menu.Divider />
-
-                    <Menu.Label>Danger zone</Menu.Label>
-                    <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
                     <Menu.Item onClick={() => signOut()} color="red" icon={<IconLogout size={14} />}>Sign Out</Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
