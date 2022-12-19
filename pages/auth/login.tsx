@@ -3,6 +3,7 @@ import { TextInput, Group, Button, Center, Container } from '@mantine/core'
 import React from 'react'
 import AuthLayout from '../../components/layout/AuthLayout'
 import Link from 'next/link';
+import { signIn } from 'next-auth/react'
 
 type Props = {}
 
@@ -45,6 +46,7 @@ const login = (props: Props) => {
                   <Button>Register</Button>
                 </Link>
               </Group>
+              <Button onClick={() => signIn('github')}>Github Login</Button>
             </form>
           </Center>
         </Container>

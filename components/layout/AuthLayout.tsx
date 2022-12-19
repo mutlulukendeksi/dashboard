@@ -1,27 +1,46 @@
-import React, { useCallback } from 'react'
+import { useSession } from 'next-auth/react';
+import Router from 'next/router';
+import React, { useCallback, useEffect, useState } from 'react'
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
+import { Text } from "@mantine/core";
 
 import AuthBackgroundImage from '../../public/images/authBackgroud.jpg';
+import Loading from '../Loading';
 
 type Props = {
   children: React.ReactNode
 }
 
 const AuthLayout = (props: Props) => {
-  const particlesInit = useCallback(async engine => {
-    console.log(engine);
-    // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
+  const particlesInit = useCallback(async (engine: any) => {
     await loadFull(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async container => {
-    await console.log(container);
+  const particlesLoaded = useCallback(async (container: any) => {
+    console.log(container);
   }, []);
 
-  return (
+  const [ready, setReady] = useState(false);
+
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      Router.push("/");
+      setReady(false);
+    } else if (status == 'unauthenticated') {
+      setReady(true)
+    } else {
+      setReady(false)
+    }
+  }, [status])
+
+  return !ready ? (
+    <Loading>
+      <Text>Loading</Text>
+    </Loading>
+  ) : (
     <div>
       <div style={{ zIndex: -999 }}>
         <Particles
