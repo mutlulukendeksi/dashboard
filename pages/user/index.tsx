@@ -1,11 +1,20 @@
 import Head from 'next/head'
 import DashboardLayout from '../../components/layout/DashboardLayout'
-import { Card, Center, Group, Pagination, ScrollArea, Table, Text } from '@mantine/core'
+import { Anchor, Avatar, Breadcrumbs, Card, Center, Container, Flex, Group, Pagination, ScrollArea, Table, Text } from '@mantine/core'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { User } from '.prisma/client';
 
 export default function UserList() {
+  const items = [
+    { title: 'Home', href: '/' },
+    { title: 'User List', href: '/user' },
+  ].map((item, index) => (
+    <Anchor href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
+
   const ths = (
     <tr>
       <th>Id</th>
@@ -13,7 +22,6 @@ export default function UserList() {
       <th>Email</th>
       <th>Email Verified</th>
       <th>Image</th>
-      <th>Password</th>
       <th>CreatedAt</th>
       <th>UpdatedAt</th>
     </tr>
@@ -38,8 +46,7 @@ export default function UserList() {
       <td>{element.email}</td>
       {/* @ts-ignore */}
       <td>{new Date(element.emailVerified).toLocaleDateString()}</td>
-      <td>{element.image}</td>
-      <td>{element.password}</td>
+      <td><Avatar src={element.image} radius="xl" alt="it's me" /></td>
       <td>{new Date(element.createdAt).toLocaleDateString()}</td>
       <td>{new Date(element.updatedAt).toLocaleDateString()}</td>
     </tr>
@@ -55,6 +62,18 @@ export default function UserList() {
       </Head>
       <main>
         <DashboardLayout>
+          <Container fluid h="50px" pb="20px">
+            <Flex
+              mih={50}
+              gap="md"
+              justify="flex-start"
+              align="center"
+              direction="row"
+              wrap="wrap"
+            >
+              <Breadcrumbs separator="→">{items}</Breadcrumbs>
+            </Flex>
+          </Container>
           <Card withBorder shadow="sm" radius="md">
             <Card.Section withBorder inheritPadding py="xs">
               <Group position="apart">
