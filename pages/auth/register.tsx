@@ -48,7 +48,7 @@ const login = (props: Props) => {
           width: "100vw",
           height: "100vh",
           flex: "flex",
-          marginTop: "-140px",
+          marginTop: "-100px",
           flexDirection: "column",
           boxShadow: "50px 50px 100px 0px rgba(0,0,0,0.75)",
         }}
