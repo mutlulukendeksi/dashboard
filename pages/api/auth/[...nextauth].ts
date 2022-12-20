@@ -1,25 +1,18 @@
-import NextAuth from "next-auth"
+import { NextApiRequest, NextApiResponse } from 'next'
+
+import AppleProvider from "next-auth/providers/apple"
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-//import Auth0Provider from "next-auth/providers/auth0"
 import FacebookProvider from "next-auth/providers/facebook"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
-import TwitterProvider from "next-auth/providers/twitter"
-//import EmailProvider from "next-auth/providers/email"
-import AppleProvider from "next-auth/providers/apple"
-import prisma from '../../../lib/prisma'
 import { NextApiHandler } from "next"
+import NextAuth from "next-auth"
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import TwitterProvider from "next-auth/providers/twitter"
 import bcrypt from "bcryptjs";
-import { NextApiRequest, NextApiResponse } from 'next'
+import prisma from '../../../lib/prisma'
 
-const authHandler: NextApiHandler = (req: NextApiRequest, res: NextApiResponse): Promise<void> => NextAuth(req, res, options);
-export default authHandler;
-
-// For more information on each option (and a full list of options) go to
-// https://next-auth.js.org/configuration/options
 const options = {
-  // https://next-auth.js.org/configuration/providers
   providers: [
     // EmailProvider({
     //   server: process.env.NEXT_EMAIL_SERVER,
@@ -32,21 +25,24 @@ const options = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      authorize: async (credentials) => {
-        const user = await prisma.user.findFirst({
-          where: {
-            email: credentials?.email
-          }
-        })        
+      async authorize(credentials): Promise<any> {
 
-        if (bcrypt.compareSync(credentials?.password as string, user?.password as string)) {
-          return {
-            id: user?.id,
-            email: user?.email,
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email
           }
-        } else {
-          return null
+        })
+
+        if (!user) {
+          throw new Error('No user found')
         }
+
+        const isValid = await bcrypt.compare(credentials.password, user.password)
+        if (!isValid) {
+          throw new Error('Invalid password')
+        }
+
+        return user
       },
     }),
     AppleProvider({
@@ -79,54 +75,18 @@ const options = {
       clientSecret: process.env.NEXT_TWITTER_SECRET,
     }),
   ],
-  // Database optional. MySQL, Maria DB, Postgres and MongoDB are supported.
-  // https://next-auth.js.org/configuration/databases
-  //
-  // Notes:
-  // * You must install an appropriate node_module for your database
-  // * The Email provider requires a database (OAuth providers do not)
-  // database: process.env.NEXT_DATABASE_URL,
 
-  // The secret should be set to a reasonably long random string.
-  // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
-  // a separate secret is defined explicitly for encrypting the JWT.
   secret: process.env.NEXT_SECRET,
 
   session: {
     jwt: true,
-    // Use JSON Web Tokens for session instead of database sessions.
-    // This option can be used with or without a database for users/accounts.
-    // Note: `strategy` should be set to 'jwt' if no database is used.
-    // strategy: 'jwt'
-
-    // Seconds - How long until an idle session expires and is no longer valid.
     maxAge: 30 * 24 * 60 * 60, // 30 days
-
-    // Seconds - Throttle how frequently to write to database to extend a session.
-    // Use it to limit write operations. Set to 0 to always update the database.
-    // Note: This option is ignored if using JSON Web Tokens
     updateAge: 24 * 60 * 60, // 24 hours
   },
 
-  // JSON Web tokens are only used for sessions if the `strategy: 'jwt'` session
-  // option is set - or by default if no database is specified.
-  // https://next-auth.js.org/configuration/options#jwt
   jwt: {
-    // A secret to use for key generation (you should set this explicitly)
     secret: process.env.NEXT_SECRET,
-    // Set to true to use encryption (default: false)
-    // encryption: true,
-    // You can define your own encode/decode functions for signing and encryption
-    // if you want to override the default behaviour.
-    // encode: async ({ secret, token, maxAge }) => {},
-    // decode: async ({ secret, token, maxAge }) => {},
   },
-
-  // You can define custom pages to override the built-in ones. These will be regular Next.js pages
-  // so ensure that they are placed outside of the '/api' folder, e.g. signIn: '/auth/mycustom-signin'
-  // The routes shown here are the default URLs that will be used when a custom
-  // pages is not specified for that route.
-  // https://next-auth.js.org/configuration/pages
   pages: {
     signIn: '/auth/login',  // Displays signin buttons
     signOut: '/auth/login', // Displays form with sign out button
@@ -135,21 +95,18 @@ const options = {
     // newUser: null // If set, new users will be directed here on first sign in
   },
 
-  // Callbacks are asynchronous functions you can use to control what happens
-  // when an action is performed.
-  // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     // async signIn({ user, account, profile, email, credentials }) { return true },
     // async redirect({ url, baseUrl }) { return baseUrl },
-    // async session({ session, token, user }) { return session },
-    // async jwt({ token, user, account, profile, isNewUser }) { return token }
+    async session({ session, token, user }) { return session },
+    async jwt({ token, user, account, profile, isNewUser }) { return token }
   },
 
-  // Events are useful for logging
-  // https://next-auth.js.org/configuration/events
   events: {},
-
-  // Enable debug messages in the console if you are having problems
   debug: false,
   adapter: PrismaAdapter(prisma)
 }
+
+
+const authHandler: NextApiHandler = (req: NextApiRequest, res: NextApiResponse): Promise<void> => NextAuth(req, res, options);
+export default authHandler;

@@ -1,8 +1,17 @@
 import { Button, Center, Container, Group, TextInput } from "@mantine/core";
+import {
+  ImFacebook2,
+  ImGithub,
+  ImGoogle2,
+  ImLinkedin,
+  ImTwitch,
+  ImTwitter,
+} from "react-icons/im";
 
 import AuthLayout from "../../components/layout/AuthLayout";
 import Link from "next/link";
 import React from "react";
+import { SiDiscord } from "react-icons/si";
 import { signIn } from "next-auth/react";
 import { useForm } from "@mantine/form";
 
@@ -39,7 +48,7 @@ const login = (props: Props) => {
           width: "100vw",
           height: "100vh",
           flex: "flex",
-          marginTop: "-180px",
+          marginTop: "-140px",
           flexDirection: "column",
           boxShadow: "50px 50px 100px 0px rgba(0,0,0,0.75)",
         }}
@@ -56,13 +65,12 @@ const login = (props: Props) => {
         </h1>
         <Container
           w="400px"
-          mt={50}
           style={{
             backgroundImage: `linear-gradient(rgba(57,35,100,.4), rgba(33,40,39,.8))`,
             height: "max-content",
             padding: "20px",
             borderRadius: "35px",
-            margin: "50px",
+            margin: "20px",
           }}
         >
           <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -110,6 +118,72 @@ const login = (props: Props) => {
                 <Button>Register</Button>
               </Link>
             </Group>
+            <Center style={{ fontSize: "20px", width: "max-contetnt" }}>
+              <hr style={{ width: "50%" }} />
+              <p
+                style={{
+                  marginLeft: "25px",
+                  marginRight: "25px",
+                  color: "white",
+                }}
+              >
+                yada
+              </p>
+              <hr style={{ width: "50%" }} />
+            </Center>
+            <Center
+              style={{
+                gap: "25px",
+                display: "flex",
+                flexFlow: "row wrap",
+              }}
+            >
+              <Button
+                style={{
+                  backgroundColor: "transparent",
+                  fontSize: "30px",
+                }}
+                onClick={() => signIn("facebook")}
+              >
+                <ImFacebook2 />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("github")}
+              >
+                <ImGithub />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("google")}
+              >
+                <ImGoogle2 />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("linkedin")}
+              >
+                <ImLinkedin />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("twitter")}
+              >
+                <ImTwitter />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("twitch")}
+              >
+                <ImTwitch />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("discord")}
+              >
+                <SiDiscord />
+              </Button>
+            </Center>
           </form>
         </Container>
       </Center>
