@@ -65,7 +65,7 @@ const DashboardLayout = (props: Props) => {
                 />
               </MediaQuery>
 
-              <Container w="100%" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Container fluid w="100%" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div></div>
                 <Menu shadow="md" width={200}>
                   <Menu.Target>
