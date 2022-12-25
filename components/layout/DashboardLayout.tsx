@@ -51,6 +51,7 @@ const DashboardLayout = (props: Props) => {
             <NavLink component="a" href="/" label="Dashboard" icon={<IconHome2 size={16} stroke={1.5} />} />
             <NavLink component="a" href="/user" label="User List" icon={<IconHome2 size={16} stroke={1.5} />} />
             <NavLink component="a" href="/device" label="Device List" icon={<IconHome2 size={16} stroke={1.5} />} />
+            <NavLink component="a" href="/emotion" label="Emotion List" icon={<IconHome2 size={16} stroke={1.5} />} />
           </Navbar>
         }
         header={
