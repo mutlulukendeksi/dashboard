@@ -35,7 +35,7 @@ export default function UserList() {
     const { data } = await axios.get("/api/users", {
       params: {
         page: activePage,
-        limit: 1,
+        limit: 10,
       }
     });
     setUsers(data.data);
