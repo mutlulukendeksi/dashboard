@@ -29,15 +29,23 @@ export default function UserList() {
 
   const [users, setUsers] = useState([]);
   const [activePage, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+
+  const getData = async () => {
+    const { data } = await axios.get("/api/users", {
+      params: {
+        page: activePage,
+        limit: 1,
+      }
+    });
+    setUsers(data.data);
+
+    setPageCount(data.pagination.pageCount)
+  }
 
   useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get("/api/users");
-      setUsers(data);
-    }
-
     getData()
-  })
+  }, [activePage])
 
   const rows = users.map((element: User) => (
     <tr key={element.id}>
@@ -92,7 +100,7 @@ export default function UserList() {
             </Card.Section>
             <Card.Section>
               <Center w="100%" p="30px">
-                <Pagination page={activePage} onChange={setPage} total={10}></Pagination>
+                <Pagination page={activePage} onChange={setPage} total={pageCount}></Pagination>
               </Center>
             </Card.Section>
           </Card>
