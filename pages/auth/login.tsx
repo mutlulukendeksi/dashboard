@@ -1,5 +1,6 @@
 import { Button, Center, Container, Group, TextInput } from "@mantine/core";
 import {
+  ImAppleinc,
   ImFacebook2,
   ImGithub,
   ImGoogle2,
@@ -182,6 +183,12 @@ const login = (props: Props) => {
                 onClick={() => signIn("discord")}
               >
                 <SiDiscord />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("apple")}
+              >
+                <ImAppleinc />
               </Button>
             </Center>
           </form>

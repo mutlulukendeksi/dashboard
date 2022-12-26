@@ -1,5 +1,13 @@
-import { Button, Center, Container, Group, TextInput } from "@mantine/core";
 import {
+  Button,
+  Center,
+  Container,
+  Group,
+  Text,
+  TextInput,
+} from "@mantine/core";
+import {
+  ImAppleinc,
   ImFacebook2,
   ImGithub,
   ImGoogle2,
@@ -53,16 +61,16 @@ const login = (props: Props) => {
           boxShadow: "50px 50px 100px 0px rgba(0,0,0,0.75)",
         }}
       >
-        <h1
+        <Text
+          fz={{ md: "70px", lg: "100px", sm: "50px" }}
           style={{
-            fontSize: "100px",
             color: "white",
             pointerEvents: "none",
             userSelect: "none",
           }}
         >
           Mutluluk Endeksi
-        </h1>
+        </Text>
         <Container
           w="400px"
           style={{
@@ -199,6 +207,12 @@ const login = (props: Props) => {
                 onClick={() => signIn("discord")}
               >
                 <SiDiscord />
+              </Button>
+              <Button
+                style={{ backgroundColor: "transparent", fontSize: "30px" }}
+                onClick={() => signIn("apple")}
+              >
+                <ImAppleinc />
               </Button>
             </Center>
           </form>

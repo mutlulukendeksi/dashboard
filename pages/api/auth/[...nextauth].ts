@@ -25,7 +25,7 @@ const options = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials){
 
         const user = await prisma.user.findUnique({
           where: {
@@ -44,7 +44,7 @@ const options = {
 
         return user
       },
-    }),
+    }as any),
     AppleProvider({
       clientId: process.env.NEXT_APPLE_ID,
       clientSecret: process.env.NEXT_APPLE_SECRET,
