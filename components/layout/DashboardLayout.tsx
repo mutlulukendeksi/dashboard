@@ -12,16 +12,7 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import {
-  IconArrowsLeftRight,
-  IconHome2,
-  IconLogout,
-  IconMessageCircle,
-  IconPhoto,
-  IconSearch,
-  IconSettings,
-  IconTrash,
-} from "@tabler/icons";
+import { IconHome2, IconLogout, IconSettings } from "@tabler/icons";
 import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -94,6 +85,12 @@ const DashboardLayout = (props: Props) => {
               component="a"
               href="/device"
               label="Device List"
+              icon={<IconHome2 size={16} stroke={1.5} />}
+            />
+            <NavLink
+              component="a"
+              href="/emotion"
+              label="Emotion List"
               icon={<IconHome2 size={16} stroke={1.5} />}
             />
           </Navbar>
