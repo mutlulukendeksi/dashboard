@@ -57,6 +57,7 @@ const DashboardLayout = (props: Props) => {
         // Override any other properties from default theme
         fontFamily: "Chakra Petch, sans serif",
       }}
+      withNormalizeCSS
     >
       <AppShell
         layout="alt"

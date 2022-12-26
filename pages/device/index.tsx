@@ -1,11 +1,20 @@
 import Head from 'next/head'
 import DashboardLayout from '../../components/layout/DashboardLayout'
-import { Table, Text } from '@mantine/core'
+import { Anchor, Breadcrumbs, Card, Center, Container, Flex, Group, Pagination, ScrollArea, Table, Text } from '@mantine/core'
 import { Device } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import axios from "axios";
 
 export default function DeviceList() {
+  const items = [
+    { title: 'Home', href: '/' },
+    { title: 'Device List', href: '/device' },
+  ].map((item, index) => (
+    <Anchor href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
+
   const ths = (
     <tr>
       <th>Id</th>
@@ -19,14 +28,24 @@ export default function DeviceList() {
   );
 
   const [devices, setDevices] = useState([]);
+  const [activePage, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+
+  const getData = async () => {
+    const { data } = await axios.get("/api/devices", {
+      params: {
+        page: activePage,
+        limit: 10,
+      }
+    });
+    setDevices(data.data);
+
+    setPageCount(data.pagination.pageCount)
+  }
 
   useEffect(() => {
-    const getData = async () => {
-      const { data } = await axios.get("/api/devices");
-      setDevices(data);
-    }
-  })
-
+    getData()
+  }, [activePage])
 
   const rows = devices.map((element: Device) => (
     <tr key={element.id}>
@@ -49,12 +68,40 @@ export default function DeviceList() {
       </Head>
       <main>
         <DashboardLayout>
-          <Table striped highlightOnHover withBorder withColumnBorders>
-            <caption>Device List</caption>
-            <thead>{ths}</thead>
-            <tbody>{rows}</tbody>
-            <tfoot>{ths}</tfoot>
-          </Table>
+          <Container fluid h="50px" pb="20px">
+            <Flex
+              mih={50}
+              gap="md"
+              justify="flex-start"
+              align="center"
+              direction="row"
+              wrap="wrap"
+            >
+              <Breadcrumbs separator="→">{items}</Breadcrumbs>
+            </Flex>
+          </Container>
+          <Card withBorder shadow="sm" radius="md">
+            <Card.Section withBorder inheritPadding py="xs">
+              <Group position="apart">
+                <Text weight={500}>Device List</Text>
+              </Group>
+            </Card.Section>
+            <Card.Section mt="sm">
+              <ScrollArea style={{ width: '100%' }}>
+                <Table striped highlightOnHover withBorder withColumnBorders>
+                  <caption>Device List</caption>
+                  <thead>{ths}</thead>
+                  <tbody>{rows}</tbody>
+                  <tfoot>{ths}</tfoot>
+                </Table>
+              </ScrollArea>
+            </Card.Section>
+            <Card.Section>
+              <Center w="100%" p="30px">
+                <Pagination page={activePage} onChange={setPage} total={pageCount}></Pagination>
+              </Center>
+            </Card.Section>
+          </Card>
         </DashboardLayout>
       </main>
     </>

@@ -1,8 +1,35 @@
 import Head from 'next/head'
 import DashboardLayout from '../components/layout/DashboardLayout'
-import { Text } from '@mantine/core'
+import { Anchor, Breadcrumbs, Container, Flex, Grid, Text } from '@mantine/core'
+import DataCount from '../components/Dashboard/DataCount'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
+  const items = [
+    { title: 'Home', href: '/' },
+  ].map((item, index) => (
+    <Anchor href={item.href} key={index}>
+      {item.title}
+    </Anchor>
+  ));
+
+  const [userCount, setUserCount] = useState(0);
+  const [deviceCount, setDeviceCount] = useState(0);
+  const [emotionCount, setEmotionCount] = useState(0);
+
+  useEffect(() => {
+    const getData = async () => {
+      const { data: userData } = await axios.get("/api/stats/user");
+      const { data: deviceData } = await axios.get("/api/stats/device");
+      const { data: emotionData } = await axios.get("/api/stats/emotion");
+      setUserCount(userData.count);
+      setDeviceCount(deviceData.count);
+      setEmotionCount(emotionData.count);
+    }
+    getData()
+  }, []);
+
   return (
     <>
       <Head>
@@ -13,7 +40,25 @@ export default function Home() {
       </Head>
       <main>
         <DashboardLayout>
-          <Text>Dashboard Home</Text>
+          <Container fluid h="50px" pb="20px">
+            <Flex
+              mih={50}
+              gap="md"
+              justify="flex-start"
+              align="center"
+              direction="row"
+              wrap="wrap"
+            >
+              <Breadcrumbs separator="→">{items}</Breadcrumbs>
+            </Flex>
+          </Container>
+          <Container fluid>
+            <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={10}>
+              <DataCount title='User' count={userCount}></DataCount>
+              <DataCount title='Device' count={deviceCount}></DataCount>
+              <DataCount title='Emotion' count={emotionCount}></DataCount>
+            </Grid>
+          </Container>
         </DashboardLayout>
       </main>
     </>
