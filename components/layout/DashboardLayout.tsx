@@ -4,8 +4,10 @@ import {
   Burger,
   Container,
   Header,
+  List,
   MediaQuery,
   Menu,
+  Modal,
   NavLink,
   Navbar,
   Text,
@@ -33,6 +35,7 @@ const DashboardLayout = (props: Props) => {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const [ready, setReady] = useState(false);
+  const [openedModal, setOpenedModal] = useState(false);
 
   const { data: session, status } = useSession();
 
@@ -213,8 +216,11 @@ const DashboardLayout = (props: Props) => {
                 </Menu.Target>
 
                 <Menu.Dropdown>
-                  <Menu.Item icon={<IconSettings size={14} />}>
-                    Settings
+                  <Menu.Item
+                    onClick={() => setOpenedModal(true)}
+                    icon={<IconSettings size={14} />}
+                  >
+                    <Text>Settings</Text>
                   </Menu.Item>
 
                   <Menu.Divider />
@@ -232,6 +238,27 @@ const DashboardLayout = (props: Props) => {
         </Header>
       }
     >
+      <Modal
+        opened={openedModal}
+        onClose={() => setOpenedModal(false)}
+        title="Ayarlar"
+        overlayColor="black"
+        centered
+        overlayOpacity={0.55}
+        overlayBlur={3}
+      >
+        <List>
+          <List.Item>Clone or download repository from GitHub</List.Item>
+          <List.Item>Install dependencies with yarn</List.Item>
+          <List.Item>
+            To start development server run npm start command
+          </List.Item>
+          <List.Item>
+            Run tests to make sure your changes do not break the build
+          </List.Item>
+          <List.Item>Submit a pull request once you are done</List.Item>
+        </List>
+      </Modal>
       {props.children}
     </AppShell>
   );
