@@ -30,11 +30,13 @@ const login = (props: Props) => {
     initialValues: {
       email: "",
       password: "",
+      password2: "",
     },
 
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Geçersiz e-posta"),
       password: (value) => (value.length >= 6 ? null : "Şifre çok kısa"),
+      password2: (value) => (value.length >= 6 ? null : "Şifre çok kısa"),
     },
   });
 
@@ -187,7 +189,7 @@ const login = (props: Props) => {
                 Password again
               </p>
               placeholder="enter password again"
-              {...form.getInputProps("password")}
+              {...form.getInputProps("password2")}
             />
 
             <Group
