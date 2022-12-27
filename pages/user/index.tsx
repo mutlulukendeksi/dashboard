@@ -91,7 +91,6 @@ export default function UserList() {
           <Container
             fluid
             h="50px"
-            pb="20px"
             bg={theme.colors.dark[6]}
             mb="md"
             style={{
@@ -101,7 +100,7 @@ export default function UserList() {
             }}
           >
             <Flex
-              mih="70px"
+              mih="50px"
               gap="md"
               justify="flex-start"
               align="center"
@@ -115,7 +114,6 @@ export default function UserList() {
           </Container>
           <Card
             withBorder
-            shadow="sm"
             radius="md"
             bg={theme.colors.dark[5]}
             style={{
