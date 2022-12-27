@@ -84,6 +84,25 @@ const login = (props: Props) => {
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <TextInput
               size="md"
+              styles={{
+                input: {
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  color: "pink",
+                  fontSize: "18px",
+                  borderRadius: "15px",
+                  transition: "all 0.5s ease",
+                  "::placeholder": {
+                    color: "orange",
+                    opacity: ".8",
+                  },
+                  ":hover , :focus": {
+                    backgroundColor: "rgba(255,255,255,0.3)",
+                    "::placeholder": {
+                      opacity: "1",
+                    },
+                  },
+                },
+              }}
               label=<p
                 style={{
                   color: "white",
@@ -100,6 +119,25 @@ const login = (props: Props) => {
             />
             <TextInput
               size="md"
+              styles={{
+                input: {
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  color: "pink",
+                  fontSize: "18px",
+                  borderRadius: "15px",
+                  transition: "all 0.5s ease",
+                  "::placeholder": {
+                    color: "orange",
+                    opacity: ".8",
+                  },
+                  ":hover , :focus": {
+                    backgroundColor: "rgba(255,255,255,0.3)",
+                    "::placeholder": {
+                      opacity: "1",
+                    },
+                  },
+                },
+              }}
               mt={10}
               label=<p
                 style={{
@@ -117,6 +155,25 @@ const login = (props: Props) => {
             />
             <TextInput
               size="md"
+              styles={{
+                input: {
+                  backgroundColor: "rgba(255,255,255,0.1)",
+                  color: "pink",
+                  fontSize: "18px",
+                  borderRadius: "15px",
+                  transition: "all 0.5s ease",
+                  "::placeholder": {
+                    color: "orange",
+                    opacity: ".8",
+                  },
+                  ":hover , :focus": {
+                    backgroundColor: "rgba(255,255,255,0.3)",
+                    "::placeholder": {
+                      opacity: "1",
+                    },
+                  },
+                },
+              }}
               mt={10}
               label=<p
                 style={{
@@ -138,9 +195,36 @@ const login = (props: Props) => {
               mt={40}
               style={{ display: "flex", justifyContent: "space-arround" }}
             >
-              <Button type="submit">Submit</Button>
+              <Button
+                styles={{
+                  root: {
+                    backgroundColor: "rgba(156,200,185,0.6)",
+                    transition: "all 0.5s ease",
+                    ":hover": {
+                      backgroundColor: "rgba(255,255,255,0.6)",
+                      color: "yellow",
+                    },
+                  },
+                }}
+                type="submit"
+              >
+                Submit
+              </Button>
               <Link href="/auth/login">
-                <Button>Login</Button>
+                <Button
+                  styles={{
+                    root: {
+                      backgroundColor: "rgba(156,200,185,0.6)",
+                      transition: "all 0.5s ease",
+                      ":hover": {
+                        backgroundColor: "rgba(255,255,255,0.6)",
+                        color: "yellow",
+                      },
+                    },
+                  }}
+                >
+                  Login
+                </Button>
               </Link>
             </Group>
             <Center style={{ fontSize: "20px", width: "max-contetnt" }}>
