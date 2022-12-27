@@ -1,14 +1,22 @@
-import Head from 'next/head'
-import DashboardLayout from '../components/layout/DashboardLayout'
-import { Anchor, Breadcrumbs, Container, Flex, Grid, Text } from '@mantine/core'
-import DataCount from '../components/Dashboard/DataCount'
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import {
+  Anchor,
+  Breadcrumbs,
+  Container,
+  Flex,
+  Grid,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import { useEffect, useState } from "react";
+
+import DashboardLayout from "../components/layout/DashboardLayout";
+import DataCount from "../components/Dashboard/DataCount";
+import Head from "next/head";
+import axios from "axios";
 
 export default function Home() {
-  const items = [
-    { title: 'Home', href: '/' },
-  ].map((item, index) => (
+  const theme = useMantineTheme();
+  const items = [{ title: "Home", href: "/" }].map((item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}
     </Anchor>
@@ -26,8 +34,8 @@ export default function Home() {
       setUserCount(userData.count);
       setDeviceCount(deviceData.count);
       setEmotionCount(emotionData.count);
-    }
-    getData()
+    };
+    getData();
   }, []);
 
   return (
@@ -40,7 +48,17 @@ export default function Home() {
       </Head>
       <main>
         <DashboardLayout>
-          <Container fluid h="50px" pb="20px">
+          <Container
+            fluid
+            h="50px"
+            bg={theme.colors.dark[6]}
+            mb="md"
+            style={{
+              borderRadius: "15px",
+              borderBottom: "2px solid #035",
+              boxShadow: "0 0 10px 0 rgba(0,0,0,0.8)",
+            }}
+          >
             <Flex
               mih={50}
               gap="md"
@@ -52,15 +70,24 @@ export default function Home() {
               <Breadcrumbs separator="→">{items}</Breadcrumbs>
             </Flex>
           </Container>
-          <Container fluid>
-            <Grid gutter={5} gutterXs="md" gutterMd="xl" gutterXl={10}>
-              <DataCount title='User' count={userCount}></DataCount>
-              <DataCount title='Device' count={deviceCount}></DataCount>
-              <DataCount title='Emotion' count={emotionCount}></DataCount>
+          <Container
+            fluid
+            bg={theme.colors.dark[5]}
+            style={{
+              borderRadius: "15px",
+              boxShadow: "0 0 10px 0 rgba(0,0,0,0.8)",
+              borderBottom: "3px solid #050",
+              padding: "35px",
+            }}
+          >
+            <Grid gutter={10} gutterXs="md" gutterMd="xl" gutterXl={25}>
+              <DataCount title="User" count={userCount}></DataCount>
+              <DataCount title="Device" count={deviceCount}></DataCount>
+              <DataCount title="Emotion" count={emotionCount}></DataCount>
             </Grid>
           </Container>
         </DashboardLayout>
       </main>
     </>
-  )
+  );
 }
