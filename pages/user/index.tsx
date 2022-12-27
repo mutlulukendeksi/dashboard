@@ -1,14 +1,30 @@
-import Head from 'next/head'
-import DashboardLayout from '../../components/layout/DashboardLayout'
-import { Anchor, Avatar, Breadcrumbs, Card, Center, Container, Flex, Group, Pagination, ScrollArea, Table, Text } from '@mantine/core'
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { User } from '.prisma/client';
+import {
+  Anchor,
+  Avatar,
+  Breadcrumbs,
+  Card,
+  Center,
+  Container,
+  Flex,
+  Group,
+  Pagination,
+  ScrollArea,
+  Table,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import { useEffect, useState } from "react";
+
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import Head from "next/head";
+import { User } from ".prisma/client";
+import axios from "axios";
 
 export default function UserList() {
+  const theme = useMantineTheme();
   const items = [
-    { title: 'Home', href: '/' },
-    { title: 'User List', href: '/user' },
+    { title: "Home", href: "/" },
+    { title: "User List", href: "/user" },
   ].map((item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}
@@ -36,16 +52,16 @@ export default function UserList() {
       params: {
         page: activePage,
         limit: 10,
-      }
+      },
     });
     setUsers(data.data);
 
-    setPageCount(data.pagination.pageCount)
-  }
+    setPageCount(data.pagination.pageCount);
+  };
 
   useEffect(() => {
-    getData()
-  }, [activePage])
+    getData();
+  }, [activePage]);
 
   const rows = users.map((element: User) => (
     <tr key={element.id}>
@@ -54,7 +70,9 @@ export default function UserList() {
       <td>{element.email}</td>
       {/* @ts-ignore */}
       <td>{new Date(element.emailVerified).toLocaleDateString()}</td>
-      <td><Avatar src={element.image} radius="xl" alt="it's me" /></td>
+      <td>
+        <Avatar src={element.image} radius="xl" alt="it's me" />
+      </td>
       <td>{new Date(element.createdAt).toLocaleDateString()}</td>
       <td>{new Date(element.updatedAt).toLocaleDateString()}</td>
     </tr>
@@ -70,26 +88,49 @@ export default function UserList() {
       </Head>
       <main>
         <DashboardLayout>
-          <Container fluid h="50px" pb="20px">
+          <Container
+            fluid
+            h="50px"
+            pb="20px"
+            bg={theme.colors.dark[6]}
+            mb="md"
+            style={{
+              borderRadius: "15px",
+              borderBottom: "2px solid #035",
+              boxShadow: "0 0 10px 0 rgba(0,0,0,0.8)",
+            }}
+          >
             <Flex
-              mih={50}
+              mih="70px"
               gap="md"
               justify="flex-start"
               align="center"
               direction="row"
               wrap="wrap"
             >
-              <Breadcrumbs separator="→">{items}</Breadcrumbs>
+              <Breadcrumbs c={theme.colors.blue[1]} separator="→">
+                {items}
+              </Breadcrumbs>
             </Flex>
           </Container>
-          <Card withBorder shadow="sm" radius="md">
+          <Card
+            withBorder
+            shadow="sm"
+            radius="md"
+            bg={theme.colors.dark[5]}
+            style={{
+              borderRadius: "15px",
+              boxShadow: "0 0 10px 0 rgba(0,0,0,0.8)",
+              borderBottom: "3px solid #050",
+            }}
+          >
             <Card.Section withBorder inheritPadding py="xs">
               <Group position="apart">
                 <Text weight={500}>User List</Text>
               </Group>
             </Card.Section>
             <Card.Section mt="sm">
-              <ScrollArea style={{ width: '100%' }}>
+              <ScrollArea style={{ width: "100%" }}>
                 <Table striped highlightOnHover withBorder withColumnBorders>
                   <caption>User List</caption>
                   <thead>{ths}</thead>
@@ -100,12 +141,16 @@ export default function UserList() {
             </Card.Section>
             <Card.Section>
               <Center w="100%" p="30px">
-                <Pagination page={activePage} onChange={setPage} total={pageCount}></Pagination>
+                <Pagination
+                  page={activePage}
+                  onChange={setPage}
+                  total={pageCount}
+                ></Pagination>
               </Center>
             </Card.Section>
           </Card>
         </DashboardLayout>
       </main>
     </>
-  )
+  );
 }
