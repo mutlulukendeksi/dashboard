@@ -12,7 +12,14 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
-import { IconHome2, IconLogout, IconSettings } from "@tabler/icons";
+import {
+  IconDeviceCameraPhone,
+  IconHeart,
+  IconHome2,
+  IconLogout,
+  IconSettings,
+  IconUserCircle,
+} from "@tabler/icons";
 import React, { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 
@@ -47,6 +54,7 @@ const DashboardLayout = (props: Props) => {
       theme={{
         // Override any other properties from default theme
         fontFamily: "Chakra Petch, sans serif",
+        colorScheme: "dark",
       }}
       withNormalizeCSS
     >
@@ -54,16 +62,21 @@ const DashboardLayout = (props: Props) => {
         layout="alt"
         styles={{
           main: {
-            background:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
+            backgroundColor: theme.colors.gray[7],
           },
         }}
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         navbar={
           <Navbar
+            style={{
+              alignItems: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "30px",
+              backgroundColor: theme.colors.gray[8],
+            }}
             p="md"
             hiddenBreakpoint="sm"
             hidden={!opened}
@@ -73,32 +86,84 @@ const DashboardLayout = (props: Props) => {
               component="a"
               href="/"
               label="Dashboard"
-              icon={<IconHome2 size={16} stroke={1.5} />}
+              icon={<IconHome2 size={24} stroke={2} />}
+              style={{
+                color: "pink",
+                padding: "15px",
+                borderRadius: "15px",
+                textShadow: "0px 0px 10px rgba(255,255,255,0.5)",
+                boxShadow: "0px 0px 10px rgba(255,255,255,0.7)",
+                borderRight: "5px solid red",
+                borderLeft: "5px solid red",
+                borderTop: "1px solid pink",
+                borderBottom: "1px solid gray",
+              }}
             />
             <NavLink
               component="a"
               href="/user"
               label="User List"
-              icon={<IconHome2 size={16} stroke={1.5} />}
+              icon={<IconUserCircle size={24} stroke={2} />}
+              style={{
+                color: "pink",
+                padding: "15px",
+                borderRadius: "15px",
+                textShadow: "0px 0px 10px rgba(255,255,255,0.5)",
+                boxShadow: "0px 0px 10px rgba(255,255,255,0.7)",
+                borderRight: "5px solid yellow",
+                borderLeft: "5px solid yellow",
+                borderTop: "1px solid orange",
+                borderBottom: "1px solid pink",
+              }}
             />
             <NavLink
               component="a"
               href="/device"
               label="Device List"
-              icon={<IconHome2 size={16} stroke={1.5} />}
+              icon={<IconDeviceCameraPhone size={24} stroke={2} />}
+              style={{
+                color: "pink",
+                padding: "15px",
+                borderRadius: "15px",
+                textShadow: "0px 0px 10px rgba(255,255,255,0.5)",
+                boxShadow: "0px 0px 10px rgba(255,255,255,0.7)",
+                borderRight: "5px solid pink",
+                borderLeft: "5px solid pink",
+                borderTop: "1px solid gray",
+                borderBottom: "1px solid white",
+              }}
             />
             <NavLink
               component="a"
               href="/emotion"
               label="Emotion List"
-              icon={<IconHome2 size={16} stroke={1.5} />}
+              icon={<IconHeart size={24} stroke={2} />}
+              style={{
+                color: "pink",
+                padding: "15px",
+                borderRadius: "15px",
+                textShadow: "0px 0px 10px rgba(255,255,255,0.5)",
+                boxShadow: "0px 0px 10px rgba(255,255,255,0.7)",
+                borderRight: "5px solid purple",
+                borderLeft: "5px solid purple",
+                borderTop: "1px solid gray",
+                borderBottom: "1px solid pink",
+              }}
             />
           </Navbar>
         }
         header={
-          <Header height={{ base: 50, md: 70 }} p="md">
+          <Header
+            height={{ base: 50, md: 70 }}
+            p="md"
+            style={{ backgroundColor: theme.colors.gray[8] }}
+          >
             <div
-              style={{ display: "flex", alignItems: "center", height: "100%" }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+              }}
             >
               <MediaQuery largerThan="sm" styles={{ display: "none" }}>
                 <Burger
@@ -113,12 +178,15 @@ const DashboardLayout = (props: Props) => {
               <Container
                 fluid
                 w="100%"
-                style={{ display: "flex", justifyContent: "space-between" }}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
               >
                 <div></div>
                 <Menu shadow="md" width={200}>
                   <Menu.Target>
-                    <Avatar radius="xl" />
+                    <Avatar radius="xl" style={{ cursor: "pointer" }} />
                   </Menu.Target>
 
                   <Menu.Dropdown>
