@@ -88,6 +88,10 @@ const login = (props: Props) => {
                     color: "orange",
                     opacity: ".8",
                   },
+                  ":-webkit-autofill,:-webkit-autofill:hover, :-webkit-autofill:focus, :-webkit-autofill:active":
+                    {
+                      transition: "background-color 5000s ease-in-out 0s",
+                    },
                   ":hover , :focus": {
                     backgroundColor: "rgba(255,255,255,0.3)",
                     "::placeholder": {
@@ -123,6 +127,10 @@ const login = (props: Props) => {
                     color: "orange",
                     opacity: ".8",
                   },
+                  ":-webkit-autofill,:-webkit-autofill:hover, :-webkit-autofill:focus, :-webkit-autofill:active":
+                    {
+                      transition: "background-color 5000s ease-in-out 0s",
+                    },
                   ":hover , :focus": {
                     backgroundColor: "rgba(255,255,255,0.3)",
                     "::placeholder": {
@@ -156,11 +164,15 @@ const login = (props: Props) => {
               <Button
                 styles={{
                   root: {
-                    backgroundColor: "rgba(156,200,185,0.6)",
+                    backgroundColor: "#ADA2FF",
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                    letterSpacing: "2px",
+                    color: "blue",
                     transition: "all 0.5s ease",
                     ":hover": {
-                      backgroundColor: "rgba(255,255,255,0.6)",
-                      color: "yellow",
+                      backgroundColor: "#C0DEFF",
+                      color: "blueviolet",
                     },
                   },
                 }}
@@ -172,10 +184,14 @@ const login = (props: Props) => {
                 <Button
                   styles={{
                     root: {
-                      backgroundColor: "rgba(156,200,185,0.6)",
+                      backgroundColor: "#439A97",
+                      textTransform: "uppercase",
+                      fontWeight: "bold",
+                      letterSpacing: "2px",
+                      color: "orange",
                       transition: "all 0.5s ease",
                       ":hover": {
-                        backgroundColor: "rgba(255,255,255,0.6)",
+                        backgroundColor: "#62B6B7",
                         color: "yellow",
                       },
                     },
