@@ -1,16 +1,31 @@
-import { Anchor, Breadcrumbs, Text, Card, Center, Container, Flex, Group, Pagination, ScrollArea, Table } from '@mantine/core'
-import { Emotion } from '@prisma/client'
-import axios from 'axios'
-import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
-import DashboardLayout from '../../components/layout/DashboardLayout'
+import {
+  Anchor,
+  Breadcrumbs,
+  Card,
+  Center,
+  Container,
+  Flex,
+  Group,
+  Pagination,
+  ScrollArea,
+  Table,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
+import React, { useEffect, useState } from "react";
 
-type Props = {}
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import { Emotion } from "@prisma/client";
+import Head from "next/head";
+import axios from "axios";
+
+type Props = {};
 
 const EmotionList = (props: Props) => {
+  const theme = useMantineTheme();
   const items = [
-    { title: 'Home', href: '/' },
-    { title: 'Emotion List', href: '/emotions' },
+    { title: "Home", href: "/" },
+    { title: "Emotion List", href: "/emotions" },
   ].map((item, index) => (
     <Anchor href={item.href} key={index}>
       {item.title}
@@ -39,16 +54,16 @@ const EmotionList = (props: Props) => {
       params: {
         page: activePage,
         limit: 10,
-      }
+      },
     });
     setEmotions(data.data);
 
-    setPageCount(data.pagination.pageCount)
-  }
+    setPageCount(data.pagination.pageCount);
+  };
 
   useEffect(() => {
-    getData()
-  }, [activePage])
+    getData();
+  }, [activePage]);
 
   const rows = emotions.map((element: Emotion) => (
     <tr key={element.id}>
@@ -62,7 +77,6 @@ const EmotionList = (props: Props) => {
     </tr>
   ));
 
-
   return (
     <>
       <Head>
@@ -73,7 +87,17 @@ const EmotionList = (props: Props) => {
       </Head>
       <main>
         <DashboardLayout>
-          <Container fluid h="50px" pb="20px">
+          <Container
+            fluid
+            h="50px"
+            bg={theme.colors.dark[6]}
+            mb="md"
+            style={{
+              borderRadius: "15px",
+              borderBottom: "2px solid #035",
+              boxShadow: "0 0 10px 0 rgba(0,0,0,0.8)",
+            }}
+          >
             <Flex
               mih={50}
               gap="md"
@@ -85,14 +109,24 @@ const EmotionList = (props: Props) => {
               <Breadcrumbs separator="→">{items}</Breadcrumbs>
             </Flex>
           </Container>
-          <Card withBorder shadow="sm" radius="md">
+          <Card
+            withBorder
+            shadow="sm"
+            radius="md"
+            bg={theme.colors.dark[5]}
+            style={{
+              borderRadius: "15px",
+              boxShadow: "0 0 10px 0 rgba(0,0,0,0.8)",
+              borderBottom: "3px solid #050",
+            }}
+          >
             <Card.Section withBorder inheritPadding py="xs">
               <Group position="apart">
                 <Text weight={500}>Emotion List</Text>
               </Group>
             </Card.Section>
             <Card.Section mt="sm">
-              <ScrollArea style={{ width: '100%' }}>
+              <ScrollArea style={{ width: "100%" }}>
                 <Table striped highlightOnHover withBorder withColumnBorders>
                   <caption>Emotion List</caption>
                   <thead>{ths}</thead>
@@ -103,14 +137,18 @@ const EmotionList = (props: Props) => {
             </Card.Section>
             <Card.Section>
               <Center w="100%" p="30px">
-                <Pagination page={activePage} onChange={setPage} total={pageCount}></Pagination>
+                <Pagination
+                  page={activePage}
+                  onChange={setPage}
+                  total={pageCount}
+                ></Pagination>
               </Center>
             </Card.Section>
           </Card>
         </DashboardLayout>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default EmotionList
+export default EmotionList;
