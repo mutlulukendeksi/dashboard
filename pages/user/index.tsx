@@ -9,6 +9,7 @@ import {
   Group,
   Pagination,
   ScrollArea,
+  Select,
   Table,
   Text,
   useMantineTheme,
@@ -46,12 +47,13 @@ export default function UserList() {
   const [users, setUsers] = useState([]);
   const [activePage, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const getData = async () => {
     const { data } = await axios.get("/api/users", {
       params: {
         page: activePage,
-        limit: 10,
+        limit: limit,
       },
     });
     setUsers(data.data);
@@ -123,8 +125,39 @@ export default function UserList() {
             }}
           >
             <Card.Section withBorder inheritPadding py="xs">
-              <Group position="apart">
-                <Text weight={500}>User List</Text>
+              <Group
+                position="apart"
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Select
+                  style={{
+                    width: "200px",
+                  }}
+                  styles={{
+                    label: {
+                      color: theme.colors.blue[1],
+                      paddingLeft: "10px",
+                    },
+                  }}
+                  label="Kaçarlı sıralanacağını seçin"
+                  placeholder="seçin (varsayılan 10)"
+                  data={[
+                    { value: "10", label: "10", onSelect: () => setLimit(10) },
+                    { value: "20", label: "20", onSelect: () => setLimit(20) },
+                    { value: "50", label: "50", onSelect: () => setLimit(50) },
+                    {
+                      value: "100",
+                      label: "100",
+                      onSelect: () => setLimit(100),
+                    },
+                  ]}
+                />
+                <Text style={{ width: "50%" }} weight={500}>
+                  User List
+                </Text>
               </Group>
             </Card.Section>
             <Card.Section mt="sm">
