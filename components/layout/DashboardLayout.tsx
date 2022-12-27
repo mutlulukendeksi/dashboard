@@ -49,7 +49,7 @@ const DashboardLayout = (props: Props) => {
       <Text>Loading</Text>
     </Loading>
   ) : (
-    <AppShell
+    <AppShell //TODO: hamburger menu not working
       layout="alt"
       styles={{
         main: {
@@ -89,6 +89,14 @@ const DashboardLayout = (props: Props) => {
               borderTop: "1px solid pink",
               borderBottom: "1px solid gray",
             }}
+            styles={{
+              root: {
+                transition: "all 0.5s ease",
+                ":hover": {
+                  opacity: 0.6,
+                },
+              },
+            }}
           />
           <NavLink
             component="a"
@@ -105,6 +113,14 @@ const DashboardLayout = (props: Props) => {
               borderLeft: "5px solid yellow",
               borderTop: "1px solid orange",
               borderBottom: "1px solid pink",
+            }}
+            styles={{
+              root: {
+                transition: "all 0.5s ease",
+                ":hover": {
+                  opacity: 0.6,
+                },
+              },
             }}
           />
           <NavLink
@@ -123,6 +139,14 @@ const DashboardLayout = (props: Props) => {
               borderTop: "1px solid gray",
               borderBottom: "1px solid white",
             }}
+            styles={{
+              root: {
+                transition: "all 0.5s ease",
+                ":hover": {
+                  opacity: 0.6,
+                },
+              },
+            }}
           />
           <NavLink
             component="a"
@@ -139,6 +163,14 @@ const DashboardLayout = (props: Props) => {
               borderLeft: "5px solid purple",
               borderTop: "1px solid gray",
               borderBottom: "1px solid pink",
+            }}
+            styles={{
+              root: {
+                transition: "all 0.5s ease",
+                ":hover": {
+                  opacity: 0.6,
+                },
+              },
             }}
           />
         </Navbar>
