@@ -131,6 +131,7 @@ const login = (props: Props) => {
                   },
                 },
               }}
+              type="password"
               mt={10}
               label=<p
                 style={{

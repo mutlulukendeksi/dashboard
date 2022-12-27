@@ -141,6 +141,7 @@ const login = (props: Props) => {
                 },
               }}
               mt={10}
+              type="password"
               label=<p
                 style={{
                   color: "white",
@@ -177,6 +178,7 @@ const login = (props: Props) => {
                 },
               }}
               mt={10}
+              type="password"
               label=<p
                 style={{
                   color: "white",
