@@ -93,10 +93,25 @@ const DashboardLayout = (props: Props) => {
               borderBottom: "1px solid gray",
             }}
             styles={{
+              body: {
+                ":hover": {
+                  animationName: "ilerle",
+                  animationDuration: "2s",
+                },
+                "@keyframes ilerle": {
+                  "0%": {
+                    transform: "translateX(0px)",
+                  },
+                  "100%": {
+                    transform: "translateX(15px)",
+                  },
+                },
+              },
               root: {
                 transition: "all 0.5s ease",
                 ":hover": {
                   opacity: 0.6,
+                  transform: "skewY(-5deg) skewX(10deg) scale(0.96) ",
                 },
               },
             }}
@@ -118,10 +133,25 @@ const DashboardLayout = (props: Props) => {
               borderBottom: "1px solid pink",
             }}
             styles={{
+              body: {
+                ":hover": {
+                  animationName: "ilerle",
+                  animationDuration: "2s",
+                },
+                "@keyframes ilerle": {
+                  "0%": {
+                    transform: "translateX(0px)",
+                  },
+                  "100%": {
+                    transform: "translateX(15px)",
+                  },
+                },
+              },
               root: {
                 transition: "all 0.5s ease",
                 ":hover": {
                   opacity: 0.6,
+                  transform: "skewY(-5deg) skewX(10deg) scale(0.96)",
                 },
               },
             }}
@@ -143,10 +173,25 @@ const DashboardLayout = (props: Props) => {
               borderBottom: "1px solid white",
             }}
             styles={{
+              body: {
+                ":hover": {
+                  animationName: "ilerle",
+                  animationDuration: "2s",
+                },
+                "@keyframes ilerle": {
+                  "0%": {
+                    transform: "translateX(0px)",
+                  },
+                  "100%": {
+                    transform: "translateX(15px)",
+                  },
+                },
+              },
               root: {
                 transition: "all 0.5s ease",
                 ":hover": {
                   opacity: 0.6,
+                  transform: "skewY(-5deg) skewX(10deg) scale(0.96)",
                 },
               },
             }}
@@ -168,10 +213,25 @@ const DashboardLayout = (props: Props) => {
               borderBottom: "1px solid pink",
             }}
             styles={{
+              body: {
+                ":hover": {
+                  animationName: "ilerle",
+                  animationDuration: "2s",
+                },
+                "@keyframes ilerle": {
+                  "0%": {
+                    transform: "translateX(0px)",
+                  },
+                  "100%": {
+                    transform: "translateX(15px)",
+                  },
+                },
+              },
               root: {
                 transition: "all 0.5s ease",
                 ":hover": {
                   opacity: 0.6,
+                  transform: "skewY(-5deg) skewX(10deg) scale(0.96)",
                 },
               },
             }}
