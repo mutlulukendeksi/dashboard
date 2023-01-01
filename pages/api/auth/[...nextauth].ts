@@ -20,6 +20,7 @@ const options = {
     // }),
     // ! Burası çalışmıyor kontrol etmemiz gerekiyor.
     CredentialsProvider({
+      id: "credentials",
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
@@ -29,8 +30,8 @@ const options = {
 
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials.email
-          }
+            email: credentials.email,
+          },
         })
 
         if (!user) {
@@ -38,27 +39,32 @@ const options = {
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password)
-        if (!isValid) {
-          throw new Error('Invalid password')
+        console.log("isvalid : ",isValid)
+        if (isValid) {
+          console.log("user pass :", user.password)
+          console.log("credentials", user)
+          return user
+        }else{
+          console.log("invalid password")
+          return Promise.resolve(null)
         }
 
-        return user
       },
-    }as any),
-    AppleProvider({
-      clientId: process.env.NEXT_APPLE_ID,
-      clientSecret: process.env.NEXT_APPLE_SECRET,
     }),
+    // AppleProvider({
+    //   clientId: process.env.NEXT_APPLE_ID,
+    //   clientSecret: process.env.NEXT_APPLE_SECRET,
+    // }),
     // Auth0Provider({
     //   clientId: process.env.AUTH0_ID,
     //   clientSecret: process.env.AUTH0_SECRET,
     //   // @ts-ignore
     //   domain: process.env.AUTH0_DOMAIN,
     // }),
-    FacebookProvider({
-      clientId: process.env.NEXT_FACEBOOK_ID,
-      clientSecret: process.env.NEXT_FACEBOOK_SECRET,
-    }),
+    // FacebookProvider({
+    //   clientId: process.env.NEXT_FACEBOOK_ID,
+    //   clientSecret: process.env.NEXT_FACEBOOK_SECRET,
+    // }),
     GithubProvider({
       clientId: process.env.NEXT_GITHUB_ID,
       clientSecret: process.env.NEXT_GITHUB_SECRET,
@@ -66,17 +72,17 @@ const options = {
       // @ts-ignore
       scope: "read:user",
     }),
-    GoogleProvider({
-      clientId: process.env.NEXT_GOOGLE_ID,
-      clientSecret: process.env.NEXT_GOOGLE_SECRET,
-    }),
-    TwitterProvider({
-      clientId: process.env.NEXT_TWITTER_ID,
-      clientSecret: process.env.NEXT_TWITTER_SECRET,
-    }),
+    // GoogleProvider({
+    //   clientId: process.env.NEXT_GOOGLE_ID,
+    //   clientSecret: process.env.NEXT_GOOGLE_SECRET,
+    // }),
+    // TwitterProvider({
+    //   clientId: process.env.NEXT_TWITTER_ID,
+    //   clientSecret: process.env.NEXT_TWITTER_SECRET,
+    // }),
   ],
 
-  secret: process.env.NEXT_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
 
   session: {
     jwt: true,
@@ -85,7 +91,7 @@ const options = {
   },
 
   jwt: {
-    secret: process.env.NEXT_SECRET,
+    secret: process.env.NEXT_JWT_SECRET,
   },
   pages: {
     signIn: '/auth/login',  // Displays signin buttons
@@ -96,14 +102,20 @@ const options = {
   },
 
   callbacks: {
-    // async signIn({ user, account, profile, email, credentials }) { return true },
-    // async redirect({ url, baseUrl }) { return baseUrl },
-    async session({ session, token, user }) { return session },
-    async jwt({ token, user, account, profile, isNewUser }) { return token }
+    jwt: async ({ token, user }) => {
+      user && (token.user = user);
+      return token;
+    },
+    session: ({ session, token }): any => {
+      return {
+        ...session,
+        user: token.user,
+      };
+    },
   },
 
   events: {},
-  debug: false,
+  debug: true,
   adapter: PrismaAdapter(prisma)
 }
 

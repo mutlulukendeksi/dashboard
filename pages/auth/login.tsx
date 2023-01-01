@@ -22,6 +22,7 @@ import React from "react";
 import { SiDiscord } from "react-icons/si";
 import { signIn } from "next-auth/react";
 import { useForm } from "@mantine/form";
+import { useSession } from "next-auth/react";
 
 type Props = {};
 
@@ -38,15 +39,20 @@ const login = (props: Props) => {
     },
   });
 
+  const { data: session, status } = useSession();
+  console.log("SessionData", session);
+  console.log("StatusData", status);
+
   const handleSubmit = () => {
-    console.log("form valueleri", form.values);
+    console.log("form valueleri login", form.values);
     signIn("credentials", {
       redirect: false,
       email: form.values.email,
       password: form.values.password,
-    }).then((res) => {
-      console.log("response değeri", res);
-    });
+      callbackUrl: "http://localhost:3000/",
+    })
+      .then((data) => console.log("loginpagethen", data))
+      .catch((error) => console.log("loginpagecatch", error));
   };
 
   return (

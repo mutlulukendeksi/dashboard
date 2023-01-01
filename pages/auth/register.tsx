@@ -15,11 +15,13 @@ import {
   ImTwitch,
   ImTwitter,
 } from "react-icons/im";
+import React, { FormEvent } from "react";
 
 import AuthLayout from "../../components/layout/AuthLayout";
 import Link from "next/link";
-import React from "react";
+import Router from "next/router";
 import { SiDiscord } from "react-icons/si";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useForm } from "@mantine/form";
 
@@ -40,15 +42,19 @@ const login = (props: Props) => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     console.log("form valueleri", form.values);
-    signIn("credentials", {
-      redirect: false,
-      email: form.values.email,
-      password: form.values.password,
-    }).then((res) => {
-      console.log("response değeri", res);
-    });
+    try {
+      const res = await axios.post("/api/user/create", {
+        email: form.values.email,
+        password: form.values.password,
+      });
+      Router.push("/auth/login");
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -83,7 +89,7 @@ const login = (props: Props) => {
             margin: "20px",
           }}
         >
-          <form onSubmit={form.onSubmit(handleSubmit)}>
+          <form onSubmit={handleSubmit}>
             <TextInput
               size="md"
               styles={{
