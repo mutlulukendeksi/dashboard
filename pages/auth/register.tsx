@@ -38,7 +38,8 @@ const login = (props: Props) => {
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Geçersiz e-posta"),
       password: (value) => (value.length >= 6 ? null : "Şifre çok kısa"),
-      password2: (value) => (value.length >= 6 ? null : "Şifre çok kısa"),
+      password2: (value) =>
+        value === form.values.password ? "" : "Şifreler eşleşmiyor",
     },
   });
 
