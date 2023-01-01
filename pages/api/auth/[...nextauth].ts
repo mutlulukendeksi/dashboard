@@ -26,7 +26,7 @@ const options = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials){
+      async authorize(credentials) {
 
         const user = await prisma.user.findUnique({
           where: {
@@ -39,13 +39,10 @@ const options = {
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password)
-        console.log("isvalid : ",isValid)
+
         if (isValid) {
-          console.log("user pass :", user.password)
-          console.log("credentials", user)
           return user
-        }else{
-          console.log("invalid password")
+        } else {
           return Promise.resolve(null)
         }
 
@@ -102,21 +99,18 @@ const options = {
   },
 
   callbacks: {
-    jwt: async ({ token, user }) => {
-      user && (token.user = user);
-      return token;
-    },
-    session: ({ session, token }): any => {
-      return {
-        ...session,
-        user: token.user,
-      };
-    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token and user id from a provider.
+      session.accessToken = token.accessToken
+      session.user.id = token.id
+
+      return session
+    }
   },
 
   events: {},
   debug: true,
-  adapter: PrismaAdapter(prisma)
+  database: process.env.DATABASE_URL,
 }
 
 

@@ -23,6 +23,7 @@ import { SiDiscord } from "react-icons/si";
 import { signIn } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { useSession } from "next-auth/react";
+import router from "next/router";
 
 type Props = {};
 
@@ -43,16 +44,18 @@ const login = (props: Props) => {
   console.log("SessionData", session);
   console.log("StatusData", status);
 
-  const handleSubmit = () => {
-    console.log("form valueleri login", form.values);
-    signIn("credentials", {
+  const handleSubmit = async () => {
+
+    const res = await signIn("credentials", {
       redirect: false,
       email: form.values.email,
       password: form.values.password,
-      callbackUrl: "http://localhost:3000/",
+      callbackUrl: `${window.location.origin}`,
     })
-      .then((data) => console.log("loginpagethen", data))
-      .catch((error) => console.log("loginpagecatch", error));
+
+    console.log(res);
+
+    if (res.url) router.push(res.url);
   };
 
   return (
@@ -102,9 +105,9 @@ const login = (props: Props) => {
                     opacity: ".8",
                   },
                   ":-webkit-autofill,:-webkit-autofill:hover, :-webkit-autofill:focus, :-webkit-autofill:active":
-                    {
-                      transition: "background-color 5000s ease-in-out 0s",
-                    },
+                  {
+                    transition: "background-color 5000s ease-in-out 0s",
+                  },
                   ":hover , :focus": {
                     backgroundColor: "rgba(255,255,255,0.3)",
                     "::placeholder": {
@@ -141,9 +144,9 @@ const login = (props: Props) => {
                     opacity: ".8",
                   },
                   ":-webkit-autofill,:-webkit-autofill:hover, :-webkit-autofill:focus, :-webkit-autofill:active":
-                    {
-                      transition: "background-color 5000s ease-in-out 0s",
-                    },
+                  {
+                    transition: "background-color 5000s ease-in-out 0s",
+                  },
                   ":hover , :focus": {
                     backgroundColor: "rgba(255,255,255,0.3)",
                     "::placeholder": {
