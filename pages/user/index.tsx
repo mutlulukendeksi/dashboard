@@ -73,7 +73,7 @@ export default function UserList() {
       {/* @ts-ignore */}
       <td>{new Date(element.emailVerified).toLocaleDateString()}</td>
       <td>
-        <Avatar src={element.image} radius="xl" alt="it's me" />
+        <Avatar src={element.image} size="sm" radius="xl" alt="it's me" />
       </td>
       <td>{new Date(element.createdAt).toLocaleDateString()}</td>
       <td>{new Date(element.updatedAt).toLocaleDateString()}</td>
