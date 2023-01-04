@@ -23,6 +23,7 @@ import Router from "next/router";
 import { SiDiscord } from "react-icons/si";
 import axios from "axios";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 import { useForm } from "@mantine/form";
 
 type Props = {};
@@ -50,11 +51,15 @@ const login = (props: Props) => {
       const res = await axios.post("/api/user/create", {
         email: form.values.email,
         password: form.values.password,
+        passwordc: form.values.password2,
       });
+      if (res.data.error) throw res;
+      toast.success("Kayıt Başarılı");
       Router.push("/auth/login");
       return res;
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+      toast.error(error.response.data.error);
     }
   };
 
