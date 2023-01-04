@@ -20,10 +20,11 @@ import AuthLayout from "../../components/layout/AuthLayout";
 import Link from "next/link";
 import React from "react";
 import { SiDiscord } from "react-icons/si";
+import router from "next/router";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 import { useForm } from "@mantine/form";
 import { useSession } from "next-auth/react";
-import router from "next/router";
 
 type Props = {};
 
@@ -45,17 +46,26 @@ const login = (props: Props) => {
   console.log("StatusData", status);
 
   const handleSubmit = async () => {
+    try{
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: form.values.email,
+        password: form.values.password,
+        callbackUrl: `${window.location.origin}`,
+      })
+      console.log(res);
+      if(res.error) throw res;
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email: form.values.email,
-      password: form.values.password,
-      callbackUrl: `${window.location.origin}`,
-    })
+      toast.success("Giriş Başarılı");
 
-    console.log(res);
+      if (res.url) router.push(res.url);
+    }catch(err){
+      console.log(err);
+      if(err.error=="CredentialsSignin") toast.error("Geçersiz şifre..");
+      else if(err.error=="No user found") toast.error("Kullanıcı bulunamadı..");
+      else toast.error(err.error);
+    }
 
-    if (res.url) router.push(res.url);
   };
 
   return (
