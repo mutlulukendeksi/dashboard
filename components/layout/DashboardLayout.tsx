@@ -3,6 +3,7 @@ import {
   Avatar,
   Burger,
   Container,
+  Flex,
   Header,
   List,
   MediaQuery,
@@ -10,6 +11,7 @@ import {
   Modal,
   NavLink,
   Navbar,
+  Notification,
   Text,
   useMantineTheme,
 } from "@mantine/core";
@@ -26,6 +28,7 @@ import { signOut, useSession } from "next-auth/react";
 
 import Loading from "../Loading";
 import Router from "next/router";
+import Settings from "../Settings";
 
 type Props = {
   children: React.ReactNode;
@@ -267,12 +270,13 @@ const DashboardLayout = (props: Props) => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                alignItems: "center",
               }}
             >
-              <div></div>
+                  <Text style={{display:"flex", alignItems:"center", justifyContent:"center", color:"beige", fontSize:"20px" }}><p style={{color:"gray"}}>Hoşgeldin</p> &nbsp; {session.user.email}</Text>
               <Menu shadow="md" width={200}>
                 <Menu.Target>
-                  <Avatar radius="xl" style={{ cursor: "pointer" }} />
+                  {session.user.image ? <Avatar src={session.user.image} size="md" radius="xl" style={{ cursor: "pointer" }} /> : <Avatar size="md" radius="xl" style={{ cursor: "pointer" }} />}
                 </Menu.Target>
 
                 <Menu.Dropdown>
@@ -301,23 +305,26 @@ const DashboardLayout = (props: Props) => {
       <Modal
         opened={openedModal}
         onClose={() => setOpenedModal(false)}
-        title="Ayarlar"
+        title="AYARLAR"
+        withCloseButton={false}
         overlayColor="black"
         centered
         overlayOpacity={0.55}
         overlayBlur={3}
+        styles={{
+          modal: {
+            width: "40%",
+            height: "60%",
+            borderRadius: "25px",
+          },
+          title: {
+            color: "pink",
+            fontSize: "25px",
+            marginLeft: "calc(50% - 40px)",
+          },
+        }}
       >
-        <List>
-          <List.Item>Clone or download repository from GitHub</List.Item>
-          <List.Item>Install dependencies with yarn</List.Item>
-          <List.Item>
-            To start development server run npm start command
-          </List.Item>
-          <List.Item>
-            Run tests to make sure your changes do not break the build
-          </List.Item>
-          <List.Item>Submit a pull request once you are done</List.Item>
-        </List>
+        <Settings />
       </Modal>
       {props.children}
     </AppShell>
