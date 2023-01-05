@@ -6,6 +6,7 @@ import {
   Flex,
   Header,
   List,
+  Loader,
   MediaQuery,
   Menu,
   Modal,
@@ -52,7 +53,8 @@ const DashboardLayout = (props: Props) => {
 
   return !ready ? (
     <Loading>
-      <Text>Loading</Text>
+      <Loader w={"25%"} h={"25%"} />
+      <Text style={{ fontSize: "20px" }}>Yükleniyor..</Text>
     </Loading>
   ) : (
     <AppShell //TODO: hamburger menu not working
