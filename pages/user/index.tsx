@@ -63,7 +63,7 @@ export default function UserList() {
 
   useEffect(() => {
     getData();
-  }, [activePage]);
+  }, [activePage, limit]);
 
   const rows = users.map((element: User) => (
     <tr key={element.id}>
@@ -144,14 +144,14 @@ export default function UserList() {
                   }}
                   label="Kaçarlı sıralanacağını seçin"
                   placeholder="seçin (varsayılan 10)"
+                  onChange={(e) => setLimit(+e)}
                   data={[
-                    { value: "10", label: "10", onSelect: () => setLimit(10) },
-                    { value: "20", label: "20", onSelect: () => setLimit(20) },
-                    { value: "50", label: "50", onSelect: () => setLimit(50) },
+                    { value: "10", label: "10" },
+                    { value: "20", label: "20" },
+                    { value: "50", label: "50" },
                     {
                       value: "100",
                       label: "100",
-                      onSelect: () => setLimit(100),
                     },
                   ]}
                 />

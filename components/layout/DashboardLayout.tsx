@@ -273,10 +273,51 @@ const DashboardLayout = (props: Props) => {
                 alignItems: "center",
               }}
             >
-                  <Text style={{display:"flex", alignItems:"center", justifyContent:"center", color:"beige", fontSize:"20px" }}><p style={{color:"gray"}}>Hoşgeldin</p> &nbsp; {session.user.email}</Text>
+              <Text
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "beige",
+                  fontSize: "20px",
+                  userSelect: "none",
+                }}
+              >
+                <p
+                  style={{
+                    color: "gray",
+                    borderBottom: "2px solid #fff",
+                    borderRight: "2px solid #fff",
+                    borderRadius: "17px",
+                    textTransform: "uppercase",
+                    padding: "5px",
+                    userSelect: "none",
+                    textEmphasis: "filled",
+                    textShadow: "0px 0px 20px rgba(125,215,156,0.4)",
+                    textEmphasisColor: "pink",
+                  }}
+                >
+                  Hoşgeldin
+                </p>
+                &nbsp;
+                {session.user.email}
+              </Text>
               <Menu shadow="md" width={200}>
                 <Menu.Target>
-                  {session.user.image ? <Avatar src={session.user.image} size="md" radius="xl" style={{ cursor: "pointer" }} /> : <Avatar size="md" radius="xl" style={{ cursor: "pointer" }} />}
+                  {session.user.image ? (
+                    <Avatar
+                      src={session.user.image}
+                      size="md"
+                      radius="xl"
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <Avatar
+                      size="md"
+                      radius="xl"
+                      style={{ cursor: "pointer" }}
+                    />
+                  )}
                 </Menu.Target>
 
                 <Menu.Dropdown>
