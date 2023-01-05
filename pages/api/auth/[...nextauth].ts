@@ -35,7 +35,9 @@ const options = {
         })
 
         if (!user) {
-          throw new Error('No user found')
+          throw new Error('Kullanıcı bulunamadı')
+        } else if (user.role !== "ADMIN") {
+          throw new Error('Admin olmadan giriş yapamazsın.')
         }
 
         const isValid = await bcrypt.compare(credentials.password, user.password)

@@ -48,6 +48,7 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
+  role          Role      @default(USER)
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   accounts      Account[]
@@ -65,6 +66,11 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 model Device {
