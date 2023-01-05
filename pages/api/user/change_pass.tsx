@@ -28,7 +28,7 @@ export default async function handler(
 
   const validPassword = await bcrypt.compare(userData.oldPassword, user.password);
   if (!validPassword) {
-    res.status(400).json({ error: "eski Şifreniz yanlış" });
+    res.status(400).json({ error: "Eski şifreniz yanlış" });
     return;
   }
 
